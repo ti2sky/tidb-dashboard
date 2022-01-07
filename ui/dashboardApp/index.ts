@@ -35,6 +35,7 @@ import AppContinuousProfiling from '@lib/apps/ContinuousProfiling/index.meta'
 import AppQueryEditor from '@lib/apps/QueryEditor/index.meta'
 import AppConfiguration from '@lib/apps/Configuration/index.meta'
 import AppDebugAPI from '@lib/apps/DebugAPI/index.meta'
+import AppRecordAndReplay from '@lib/apps/RecordAndReplay/index.meta'
 import { handleSSOCallback, isSSOCallback } from '@lib/utils/authSSO'
 import { mustLoadAppInfo, reloadWhoAmI } from '@lib/utils/store'
 // import __APP_NAME__ from '@lib/apps/__APP_NAME__/index.meta'
@@ -122,6 +123,7 @@ async function webPageStart() {
     .register(AppQueryEditor)
     .register(AppConfiguration)
     .register(AppDebugAPI)
+      .register(AppRecordAndReplay)
   // .register(__APP_NAME__)
   // NOTE: Don't remove above comment line, it is a placeholder for code generator
 

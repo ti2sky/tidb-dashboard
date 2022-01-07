@@ -1,4 +1,4 @@
-// Copyright 2021 PingCAP, Inc. Licensed under Apache-2.0.
+// Copyright 2022 PingCAP, Inc. Licensed under Apache-2.0.
 
 package apiserver
 
@@ -24,6 +24,7 @@ import (
 	"github.com/pingcap/tidb-dashboard/pkg/apiserver/metrics"
 	"github.com/pingcap/tidb-dashboard/pkg/apiserver/profiling"
 	"github.com/pingcap/tidb-dashboard/pkg/apiserver/queryeditor"
+	"github.com/pingcap/tidb-dashboard/pkg/apiserver/recordandreplay"
 	"github.com/pingcap/tidb-dashboard/pkg/apiserver/user/code"
 	"github.com/pingcap/tidb-dashboard/pkg/apiserver/user/code/codeauth"
 	"github.com/pingcap/tidb-dashboard/pkg/apiserver/user/sqlauth"
@@ -121,6 +122,7 @@ func (s *Service) Start(ctx context.Context) error {
 			metrics.NewService,
 			queryeditor.NewService,
 			configuration.NewService,
+			recordandreplay.NewService,
 			// __APP_NAME__.NewService,
 			// NOTE: Don't remove above comment line, it is a placeholder for code generator
 		),
@@ -146,6 +148,7 @@ func (s *Service) Start(ctx context.Context) error {
 			metrics.RegisterRouter,
 			queryeditor.RegisterRouter,
 			configuration.RegisterRouter,
+			recordandreplay.RegisterRouter,
 			// __APP_NAME__.RegisterRouter,
 			// NOTE: Don't remove above comment line, it is a placeholder for code generator
 			// Must be at the end

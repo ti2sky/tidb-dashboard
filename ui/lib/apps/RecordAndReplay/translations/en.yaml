@@ -1,0 +1,19 @@
+record_and_replay:
+  nav_title: Record and Replay Workloads
+  record_start: Start recording
+  record_stop: Stop recording
+  replay_start: Start replaying
+  replay_stop: Stop replaying
+  start_time: Start time
+  end_time: End time
+  status: Status
+  action: Action
+  filename: Filename
+  delete: Delete
+  delete_selected: Delete selected task
+  delete_all: Delete all tasks
+  recording: Recording
+  record_finished: Recording Done
+  replaying: Replaying
+  replay_finished: Replaying Done
+  task_error: Error

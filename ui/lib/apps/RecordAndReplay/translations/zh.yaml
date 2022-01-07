@@ -1,0 +1,19 @@
+record_and_replay:
+  nav_title: 负载录制与回放
+  record_start: 开始录制
+  record_stop: 停止录制
+  replay_start: 开始回放
+  replay_stop: 停止回放
+  start_time: 开始时间
+  end_time: 结束时间
+  status: 状态
+  action: 操作
+  filename: 文件名
+  delete: 删除
+  delete_selected: 删除选中的任务
+  delete_all: 删除全部任务
+  recording: 录制中
+  record_finished: 录制完成
+  replaying: 回放中
+  replay_finished: 回放完成
+  task_error: 任务异常
