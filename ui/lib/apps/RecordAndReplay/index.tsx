@@ -91,14 +91,15 @@ function App() {
         }
     }, [])
 
-    const handleDelete = useCallback(async (taskID: string) => {
+    async function handleDelete(taskID: string) {
+        console.log("handle delete")
         const resp = await client.getInstance().recordandreplayTasksIdDelete(taskID)
         if (resp.status == 200) {
             console.log("handle delete")
         } else {
             console.log(resp.status)
         }
-    }, [])
+    }
 
     async function handleReplay(taskID: string) {
         setReplaying(true)
@@ -146,7 +147,7 @@ function App() {
                         type="primary"
                         // icon={<CaretRightOutlined/>}
                         onClick={() => handleStopRecord(task.id as string)}
-                        // disabled={isRecording}
+                        // disabled={isReplaying || isRecording}
                     >
                         {t('record_and_replay.record_stop')}
                     </Button>
@@ -158,7 +159,7 @@ function App() {
                             type="primary"
                             // icon={<CaretRightOutlined/>}
                             onClick={() => handleReplay(task.id as string)}
-                            disabled={isReplaying}
+                            disabled={isReplaying || isRecording}
                         >
                             {t('record_and_replay.replay_start')}
                         </Button>

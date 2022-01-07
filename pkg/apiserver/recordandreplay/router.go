@@ -38,6 +38,7 @@ func RegisterRouter(r *gin.RouterGroup, auth *user.AuthService, s *Service) {
 
 	endpoint.GET("/tasks", s.GetAllTasks)
 	endpoint.GET("/tasks/:id", s.GetTaskByID)
+	endpoint.DELETE("/tasks/:id", s.DeleteTask)
 
 	endpoint.POST("/tasks/record", s.StartRecordTask)
 	endpoint.GET("/tasks/:id/stop_record", s.StopRecordTask)
@@ -222,9 +223,10 @@ func (s *Service) StartReplayTask(c *gin.Context) {
 			if _, err := s.params.HTTPClient.Send(s.lifecycleCtx, uri, http.MethodGet, nil, ErrHTTPClientRequestFailed, distro.R().TiDB); err != nil {
 				_ = c.Error(err)
 				log.Warn("failed to start replaying on instance",
-					zap.String("instance", ip),
+					zap.String("url", uri),
 					zap.Error(err))
 			}
+			log.Debug("start replay", zap.String("url", uri))
 		}(instance.IP)
 	}
 
@@ -235,7 +237,7 @@ func (s *Service) StartReplayTask(c *gin.Context) {
 	}
 
 	wg.Wait()
-	log.Debug("begin sleep")
+	log.Debug("begin sleep", zap.Duration("time", task.EndTime.Sub(task.StartTime)))
 	time.Sleep(task.EndTime.Sub(task.StartTime))
 	log.Debug("stop sleep")
 
@@ -247,12 +249,13 @@ func (s *Service) StartReplayTask(c *gin.Context) {
 			if _, err := s.params.HTTPClient.Send(s.lifecycleCtx, uri, http.MethodGet, nil, ErrHTTPClientRequestFailed, distro.R().TiDB); err != nil {
 				_ = c.Error(err)
 				log.Warn("failed to stop replaying on instance",
-					zap.String("instance", ip),
+					zap.String("url", uri),
 					zap.Error(err))
 			}
 		}(instance.IP)
 	}
 	wg.Wait()
+
 	if err := UpdateTaskState(s.params.LocalStore, taskID, TaskStateFinishReplaying); err != nil {
 		log.Error("failed to update task state", zap.Error(err))
 	}
